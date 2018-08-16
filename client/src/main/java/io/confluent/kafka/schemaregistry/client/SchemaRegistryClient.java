@@ -54,4 +54,8 @@ public interface SchemaRegistryClient {
   public String getCompatibility(String subject) throws IOException, RestClientException;
 
   public Collection<String> getAllSubjects() throws IOException, RestClientException;
+
+  public void setConnectTimeout(int connectTimeout);
+
+  public void setReadTimeout(int readTimeout);
 }
