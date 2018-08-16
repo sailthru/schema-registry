@@ -202,4 +202,14 @@ public class CachedSchemaRegistryClient implements SchemaRegistryClient {
     return restService.getAllSubjects();
   }
 
+  @Override
+  public void setConnectTimeout(int connectTimeout) {
+    restService.setConnectTimeout(connectTimeout);
+  }
+
+  @Override
+  public void setReadTimeout(int readTimeout) {
+    restService.setReadTimeout(readTimeout);
+  }
+
 }

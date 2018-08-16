@@ -260,4 +260,12 @@ public class MockSchemaRegistryClient implements SchemaRegistryClient {
     Collections.sort(results, String.CASE_INSENSITIVE_ORDER);
     return results;
   }
+
+  @Override
+  public void setConnectTimeout(int connectTimeout) {
+  }
+
+  @Override
+  public void setReadTimeout(int readTimeout) {
+  }
 }
