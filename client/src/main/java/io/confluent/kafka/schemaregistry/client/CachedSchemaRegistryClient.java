@@ -106,6 +106,16 @@ public class CachedSchemaRegistryClient implements SchemaRegistryClient {
 
         restService.setBasicAuthCredentialProvider(basicAuthCredentialProvider);
       }
+
+      String connectTimeout = (String) configs.get(SchemaRegistryClientConfig.CONNECT_TIMEOUT);
+      if (connectTimeout != null && !connectTimeout.isEmpty()) {
+        restService.setConnectTimeout(Integer.parseInt(connectTimeout));
+      }
+
+      String readTimeout = (String) configs.get(SchemaRegistryClientConfig.READ_TIMEOUT);
+      if (readTimeout != null && !readTimeout.isEmpty()) {
+        restService.setReadTimeout(Integer.parseInt(readTimeout));
+      }
     }
   }
 

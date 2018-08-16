@@ -110,6 +110,8 @@ public class RestService {
   private UrlList baseUrls;
   private SSLSocketFactory sslSocketFactory;
   private BasicAuthCredentialProvider basicAuthCredentialProvider;
+  private int connectTimeout;
+  private int readTimeout;
 
   public RestService(UrlList baseUrls) {
     this.baseUrls = baseUrls;
@@ -151,6 +153,9 @@ public class RestService {
     try {
       URL url = new URL(requestUrl);
       connection = (HttpURLConnection) url.openConnection();
+
+      connection.setConnectTimeout(connectTimeout);
+      connection.setReadTimeout(readTimeout);
 
       setupSsl(connection);
       connection.setRequestMethod(method);
@@ -535,5 +540,13 @@ public class RestService {
   public void setBasicAuthCredentialProvider(
       BasicAuthCredentialProvider basicAuthCredentialProvider) {
     this.basicAuthCredentialProvider = basicAuthCredentialProvider;
+  }
+
+  public void setConnectTimeout(int connectTimeout) {
+    this.connectTimeout = connectTimeout;
+  }
+
+  public void setReadTimeout(int readTimeout) {
+    this.readTimeout = readTimeout;
   }
 }
