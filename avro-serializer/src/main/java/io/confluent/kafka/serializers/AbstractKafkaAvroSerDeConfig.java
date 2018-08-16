@@ -81,6 +81,20 @@ public class AbstractKafkaAvroSerDeConfig extends AbstractConfig {
       "Determines how to construct the subject name under which the value schema is registered "
       + "with the schema registry. By default, <topic>-value is used as subject.";
 
+   public static final String SCHEMA_REGISTRY_CONNECT_TIMEOUT_CONFIG =
+           SchemaRegistryClientConfig.CONNECT_TIMEOUT;
+   public static final String
+       SCHEMA_REGISTRY_CONNECT_TIMEOUT_DOC =
+       "Schema registry client connection timeout (in milliseconds) to use.";
+   public static final int SCHEMA_REGISTRY_CONNECT_TIMEOUT_DEFAULT = 0;
+
+   public static final String SCHEMA_REGISTRY_READ_TIMEOUT_CONFIG =
+           SchemaRegistryClientConfig.READ_TIMEOUT;
+   public static final String
+       SCHEMA_REGISTRY_READ_TIMEOUT_DOC =
+       "Schema registry client read timeout (in milliseconds) to use.";
+   public static final int SCHEMA_REGISTRY_READ_TIMEOUT_DEFAULT = 0;
+
   public static ConfigDef baseConfigDef() {
     return new ConfigDef()
         .define(SCHEMA_REGISTRY_URL_CONFIG, Type.LIST,
@@ -98,7 +112,11 @@ public class AbstractKafkaAvroSerDeConfig extends AbstractConfig {
         .define(KEY_SUBJECT_NAME_STRATEGY, Type.CLASS, KEY_SUBJECT_NAME_STRATEGY_DEFAULT,
                 Importance.MEDIUM, KEY_SUBJECT_NAME_STRATEGY_DOC)
         .define(VALUE_SUBJECT_NAME_STRATEGY, Type.CLASS, VALUE_SUBJECT_NAME_STRATEGY_DEFAULT,
-                Importance.MEDIUM, VALUE_SUBJECT_NAME_STRATEGY_DOC);
+                Importance.MEDIUM, VALUE_SUBJECT_NAME_STRATEGY_DOC)
+        .define(SCHEMA_REGISTRY_CONNECT_TIMEOUT_CONFIG, Type.INT,
+                Importance.MEDIUM, SCHEMA_REGISTRY_CONNECT_TIMEOUT_DOC)
+        .define(SCHEMA_REGISTRY_READ_TIMEOUT_CONFIG, Type.INT,
+                Importance.MEDIUM, SCHEMA_REGISTRY_READ_TIMEOUT_DOC);
   }
 
   public AbstractKafkaAvroSerDeConfig(ConfigDef config, Map<?, ?> props) {
@@ -131,5 +149,13 @@ public class AbstractKafkaAvroSerDeConfig extends AbstractConfig {
       return deprecatedValue;
     }
     return getString(USER_INFO_CONFIG);
+  }
+
+  public int getConnectTimeout() {
+    return this.getInt(SCHEMA_REGISTRY_CONNECT_TIMEOUT_CONFIG);
+  }
+
+  public int getReadTimeout() {
+    return this.getInt(SCHEMA_REGISTRY_READ_TIMEOUT_CONFIG);
   }
 }
