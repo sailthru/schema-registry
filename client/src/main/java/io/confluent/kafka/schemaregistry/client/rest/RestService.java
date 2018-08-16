@@ -88,6 +88,8 @@ public class RestService {
   }
 
   private UrlList baseUrls;
+  private int connectTimeout;
+  private int readTimeout;
 
   public RestService(UrlList baseUrls) {
     this.baseUrls = baseUrls;
@@ -124,6 +126,9 @@ public class RestService {
       URL url = new URL(requestUrl);
       connection = (HttpURLConnection) url.openConnection();
       connection.setRequestMethod(method);
+
+      connection.setConnectTimeout(connectTimeout);
+      connection.setReadTimeout(readTimeout);
 
       // connection.getResponseCode() implicitly calls getInputStream, so always set to true.
       // On the other hand, leaving this out breaks nothing.
@@ -400,4 +405,11 @@ public class RestService {
     return baseUrls;
   }
 
+  public void setConnectTimeout(int connectTimeout) {
+    this.connectTimeout = connectTimeout;
+  }
+
+  public void setReadTimeout(int readTimeout) {
+    this.readTimeout = readTimeout;
+  }
 }

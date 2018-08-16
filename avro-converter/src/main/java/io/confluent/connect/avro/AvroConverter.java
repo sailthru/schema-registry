@@ -60,6 +60,8 @@ public class AvroConverter implements Converter {
     
     if (schemaRegistry == null) {
         schemaRegistry = new CachedSchemaRegistryClient(avroConverterConfig.getSchemaRegistryUrls(), avroConverterConfig.getMaxSchemasPerSubject());
+        schemaRegistry.setConnectTimeout(avroConverterConfig.getConnectTimeout());
+        schemaRegistry.setReadTimeout(avroConverterConfig.getReadTimeout());
     }
     
     serializer = new Serializer(schemaRegistry);

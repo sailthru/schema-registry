@@ -39,12 +39,30 @@ public class AbstractKafkaAvroSerDeConfig extends AbstractConfig {
   public static final String MAX_SCHEMAS_PER_SUBJECT_DOC =
       "Maximum number of schemas to create or cache locally.";
 
+  public static final String SCHEMA_REGISTRY_CONNECT_TIMEOUT_CONFIG =
+          "schema.registry.timeout.connect";
+  public static final String
+      SCHEMA_REGISTRY_CONNECT_TIMEOUT_DOC =
+      "Schema registry client connection timeout (in milliseconds) to use.";
+  public static final int SCHEMA_REGISTRY_CONNECT_TIMEOUT_DEFAULT = 0;
+
+  public static final String SCHEMA_REGISTRY_READ_TIMEOUT_CONFIG =
+          "schema.registry.timeout.read";
+  public static final String
+      SCHEMA_REGISTRY_READ_TIMEOUT_DOC =
+      "Schema registry client read timeout (in milliseconds) to use.";
+  public static final int SCHEMA_REGISTRY_READ_TIMEOUT_DEFAULT = 0;
+
   public static ConfigDef baseConfigDef() {
     return new ConfigDef()
         .define(SCHEMA_REGISTRY_URL_CONFIG, Type.LIST,
                 Importance.HIGH, SCHEMA_REGISTRY_URL_DOC)
         .define(MAX_SCHEMAS_PER_SUBJECT_CONFIG, Type.INT, MAX_SCHEMAS_PER_SUBJECT_DEFAULT,
-                Importance.LOW, MAX_SCHEMAS_PER_SUBJECT_DOC);
+                Importance.LOW, MAX_SCHEMAS_PER_SUBJECT_DOC)
+        .define(SCHEMA_REGISTRY_CONNECT_TIMEOUT_CONFIG, Type.INT,
+                Importance.MEDIUM, SCHEMA_REGISTRY_CONNECT_TIMEOUT_DOC)
+        .define(SCHEMA_REGISTRY_READ_TIMEOUT_CONFIG, Type.INT,
+                Importance.MEDIUM, SCHEMA_REGISTRY_READ_TIMEOUT_DOC);
   }
 
   public AbstractKafkaAvroSerDeConfig(ConfigDef config, Map<?, ?> props) {
@@ -59,4 +77,11 @@ public class AbstractKafkaAvroSerDeConfig extends AbstractConfig {
     return this.getList(SCHEMA_REGISTRY_URL_CONFIG);
   }
 
+  public int getConnectTimeout() {
+    return this.getInt(SCHEMA_REGISTRY_CONNECT_TIMEOUT_CONFIG);
+  }
+
+  public int getReadTimeout() {
+    return this.getInt(SCHEMA_REGISTRY_READ_TIMEOUT_CONFIG);
+  }
 }

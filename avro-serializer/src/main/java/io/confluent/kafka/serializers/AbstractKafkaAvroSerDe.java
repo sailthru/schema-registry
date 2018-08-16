@@ -69,6 +69,8 @@ public abstract class AbstractKafkaAvroSerDe {
 
       if(null==schemaRegistry){
         schemaRegistry = new CachedSchemaRegistryClient(urls, maxSchemaObject);
+        schemaRegistry.setConnectTimeout(config.getConnectTimeout());
+        schemaRegistry.setReadTimeout(config.getReadTimeout());
       }
     } catch (io.confluent.common.config.ConfigException e) {
       throw new ConfigException(e.getMessage());
