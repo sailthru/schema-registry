@@ -87,19 +87,6 @@ public class AvroMessageFormatter extends AbstractKafkaAvroDeserializer
     schemaRegistry = new CachedSchemaRegistryClient(
         url, AbstractKafkaAvroSerDeConfig.MAX_SCHEMAS_PER_SUBJECT_DEFAULT);
 
-    int connectTimeout = Integer.parseInt(props.getProperty(
-            AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_CONNECT_TIMEOUT_CONFIG,
-            Integer.toString(
-                    AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_CONNECT_TIMEOUT_DEFAULT)));
-
-    int readTimeout = Integer.parseInt(props.getProperty(
-            AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_READ_TIMEOUT_CONFIG,
-            Integer.toString(
-                    AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_READ_TIMEOUT_DEFAULT)));
-
-    schemaRegistry.setConnectTimeout(connectTimeout);
-    schemaRegistry.setReadTimeout(readTimeout);
-
     if (props.containsKey("print.key")) {
       printKey = props.getProperty("print.key").trim().toLowerCase().equals("true");
     }
